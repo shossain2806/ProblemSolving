@@ -34,15 +34,22 @@ class Solution:
         # start from N
         # while !Bad
         # N/2
-        lower_index = 1
-        upper_index = n 
+        lower = 1
+        upper = n
         
-        while lower_index <= upper_index:
-            mid = int(( upper_index + lower_index ) / 2)
-            if isBadVersion(mid) == True and ( mid == 1 or isBadVersion(mid - 1) == False):
+        while lower <= upper:
+            mid = int((lower + upper) / 2)
+            prev = max(lower, mid -1 )
+            next = min(upper, mid + 1)
+            isBad = isBadVersion(mid)
+            if isBad == True and (isBadVersion(prev) == False or prev == mid):
                 return mid
-            elif isBadVersion(mid) == True:
-                upper_index = mid - 1
+            elif isBad == False and (isBadVersion(next) == True or next == mid):
+                return next
+            
+            if isBad == False:
+                lower = mid + 1
             else:
-                lower_index = mid + 1
-        return -1
+                upper = mid - 1
+        
+        return - 1
